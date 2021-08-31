@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:shop_app/business_logic/cubit/shop_cubit.dart';
+import 'package:shop_app/ui/styles/colors.dart';
 import 'package:shop_app/ui/widgets/form_field.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -71,6 +72,21 @@ class SettingsScreen extends StatelessWidget {
                           },
                           label: 'Phone Number',
                           prefix: Icons.phone),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'LOG OUT',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18.0),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
