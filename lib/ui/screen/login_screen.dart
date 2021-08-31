@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/business_logic/conditional_builder.dart';
 import 'package:shop_app/business_logic/cubit/login_cubit.dart';
 import 'package:shop_app/constants/constants.dart';
+import 'package:shop_app/data/local/cache_helper.dart';
 import 'package:shop_app/ui/screen/home_screen.dart';
 import 'package:shop_app/ui/screen/register_screen.dart';
 
@@ -23,14 +24,24 @@ class LoginScreen extends StatelessWidget {
           if (state is ShopLoginSuccessState) {
             if (state.loginModel.status!) {
               print(state.loginModel.message);
-              Fluttertoast.showToast(
-                  msg: state.loginModel.message.toString(),
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.CENTER,
-                  timeInSecForIosWeb: 5,
-                  backgroundColor: Colors.green,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              // Fluttertoast.showToast(
+              //     msg: state.loginModel.message.toString(),
+              //     toastLength: Toast.LENGTH_SHORT,
+              //     gravity: ToastGravity.CENTER,
+              //     timeInSecForIosWeb: 5,
+              //     backgroundColor: Colors.green,
+              //     textColor: Colors.white,
+              //     fontSize: 16.0);
+              CacheHelper.saveData(
+                key: 'token',
+                value: state.loginModel.data!.token,
+              ).then((value)
+
+
+              {
+                token = state.loginModel.data!.token;
+                navigatToFinish(context, HomeScreen());
+              });
 
               navigatToFinish(context, HomeScreen());
             } else {
@@ -141,10 +152,14 @@ class LoginScreen extends StatelessWidget {
                                   onPressed: () {
                                     if (formKey.currentState!.validate()) {
                                       LoginCubit.get(context).userLogin(
-                                        email: mailController.text.trim(),
-                                        password: passController.text.trim(),
+                                        email: mailController.text,
+                                        password: passController.text,
                                       );
+
+                                      token = CacheHelper.getData( key: 'token');
+
                                     }
+
                                   },
                                   child: Text('LOGIN'),
                                 ),

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/constants/constants.dart';
 import 'package:shop_app/data/api/end_points.dart';
 import 'package:shop_app/data/api/shop_Api.dart';
 import 'package:shop_app/data/models/shopLoginModel.dart';
@@ -23,7 +24,7 @@ class LoginCubit extends Cubit<LoginState> {
     ShopApi.postData(url: LOGIN, data: {
       'email': email,
       'password': password,
-    }).then((value) {
+    },token: token,).then((value) {
       print(value.data);
 
       loginModel =  ShopLoginModel.fromJson(value.data);

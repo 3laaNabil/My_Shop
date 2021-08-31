@@ -16,20 +16,25 @@ Future<void> main() async {
   ShopApi.init();
   await CacheHelper.init();
   Widget widget;
-  bool? showOnBoard = CacheHelper.getData(key: 'onBoarding',);
+  bool? showOnBoard = CacheHelper.getData(
+    key: 'onBoarding',
+  );
 
-   token = CacheHelper.getData(key: 'token',);
+  token = CacheHelper.getData(key: 'token');
+  print(token);
+
   if (showOnBoard == false) {
-    if (token != "")
+    if (token != null) {
       widget = HomeScreen();
-    else
+    } else {
       widget = LoginScreen();
-  }
-  else
+    }
+  } else
     widget = OnboardingScreen();
 
-
-  runApp(MyApp(startWidget: widget,));
+  runApp(MyApp(
+    startWidget: widget,
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -43,7 +48,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShopCubit()..getHomeData(),
+      create: (context) => ShopCubit()
+        ..getHomeData()
+        ..getCategoriesData()
+        ..getFavorites()
+        ..getUserData()
+      ,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: lightTheme,
@@ -55,4 +65,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

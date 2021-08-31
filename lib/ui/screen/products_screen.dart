@@ -1,11 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:shop_app/business_logic/conditional_builder.dart';
 import 'package:shop_app/business_logic/cubit/shop_cubit.dart';
+import 'package:shop_app/data/models/categories_model.dart';
 import 'package:shop_app/data/models/home_model.dart';
 import 'package:shop_app/ui/styles/colors.dart';
+import 'package:shop_app/ui/widgets/build_list_product.dart';
 
 class ProductsScreen extends StatelessWidget {
   @override
@@ -14,17 +18,20 @@ class ProductsScreen extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: ShopCubit.get(context).homeModel != null,
-          builder: (context) => _buildHome(ShopCubit.get(context).homeModel!),
+          condition: ShopCubit.get(context).homeModel != null &&
+              ShopCubit.get(context).categoriesModel != null,
+          builder: (context) => _buildHome(ShopCubit.get(context).homeModel!,
+              ShopCubit.get(context).categoriesModel!, context),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
 
-  Widget _buildHome(HomeModel model) {
+  Widget _buildHome(HomeModel model, CategoriesModel categoriesModel, context) {
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CarouselSlider(
             items: model.data!.banners
@@ -51,6 +58,50 @@ class ProductsScreen extends StatelessWidget {
             height: 10.0,
           ),
           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Categories',
+                  style: TextStyle(
+                      fontSize: 24.0,
+                      color: defaultColor,
+                      fontWeight: FontWeight.w700),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                Container(
+                  height: 100,
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) => SizedBox(
+                      width: 20 ,
+                    ) ,
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) =>
+                        buildCategoryItem(categoriesModel.data!.data[index]),
+                    itemCount: categoriesModel.data!.data.length,
+                  ),
+                ),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Text(
+                  'New Products',
+                  style: TextStyle(
+                      fontSize: 24.0,
+                      color: defaultColor,
+                      fontWeight: FontWeight.w700),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
+          Padding(
             padding: EdgeInsets.all(10.0),
             child: GridView.count(
               mainAxisSpacing: 1.0,
@@ -59,8 +110,10 @@ class ProductsScreen extends StatelessWidget {
               physics: BouncingScrollPhysics(),
               shrinkWrap: true,
               crossAxisCount: 2,
-              children: List.generate(model.data!.products.length,
-                  (index) => _buildGridProducts(model.data!.products[index])),
+              children: List.generate(
+                  model.data!.products.length,
+                  (index) =>
+                      buildGridProducts(model.data!.products[index], context)),
             ),
           ),
         ],
@@ -68,7 +121,36 @@ class ProductsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGridProducts(HomeProductModel model) {
+  Widget buildCategoryItem(DataModel model) {
+    return Stack(
+      alignment: AlignmentDirectional.bottomCenter,
+      children: [
+        Image(
+          image: NetworkImage('${model.image}'),
+          height: 100.0,
+          width: 100.0,
+          fit: BoxFit.cover,
+        ),
+        Container(
+          color: Colors.black.withOpacity(
+            .8,
+          ),
+          width: 100.0,
+          child: Text(
+            '${model.name}',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildGridProducts(ProductModel model, context) {
     return Card(
       shadowColor: Colors.purple,
       child: Padding(
@@ -85,7 +167,6 @@ class ProductsScreen extends StatelessWidget {
                 ),
                 if (model.discount != 0)
                   Container(
-                    
                     color: Colors.red,
                     padding: EdgeInsets.symmetric(
                       horizontal: 5.0,
@@ -135,8 +216,25 @@ class ProductsScreen extends StatelessWidget {
                 ),
                 Spacer(),
                 Expanded(
-                    child: IconButton(
-                        onPressed: () {}, icon: Icon(Icons.favorite_border)))
+                  child: IconButton(
+                    onPressed: () {
+                      ShopCubit.get(context).changeFavorites(model.id);
+
+                      print(model.id);
+                    },
+                    icon: CircleAvatar(
+                      radius: 15.0,
+                      backgroundColor: ShopCubit.get(context).favorites[model.id]
+                          ? defaultColor
+                          : Colors.grey,
+                      child: Icon(
+                        Icons.favorite_border,
+                        size: 14.0,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ],
