@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/business_logic/cubit/shop_cubit.dart';
+import 'package:shop_app/data/local/cache_helper.dart';
+import 'package:shop_app/ui/screen/login_screen.dart';
 
 navigatTo(context, widget) {
   return Navigator.push(
@@ -23,3 +26,9 @@ navigatToFinish(context, widget) {
 }
 
  String ?token  ;
+void signOut (context) {
+  CacheHelper.removeData('token').then((value){
+    navigatToFinish(context, LoginScreen());
+    ShopCubit.get(context).currentIndex = 0;
+  });
+}

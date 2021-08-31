@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:shop_app/business_logic/cubit/shop_cubit.dart';
+import 'package:shop_app/constants/constants.dart';
+import 'package:shop_app/data/local/cache_helper.dart';
 import 'package:shop_app/ui/styles/colors.dart';
 import 'package:shop_app/ui/widgets/form_field.dart';
+
+import 'login_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   //const SettingsScreen({Key? key}) : super(key: key);
@@ -79,7 +83,7 @@ class SettingsScreen extends StatelessWidget {
                         width: double.infinity,
                         height: 50,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () => signOut(context),
                           child: const Text(
                             'LOG OUT',
                             style: TextStyle(
