@@ -55,3 +55,6 @@ class ShopSuccessUpdateUserState extends ShopState
 }
 
 class ShopErrorUpdateUserState extends ShopState {}
+
+
+

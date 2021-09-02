@@ -13,26 +13,29 @@ class FavoritesScreen extends StatelessWidget {
     return BlocConsumer<ShopCubit, ShopState>(
       listener: (context, state) {},
       builder: (context, state) {
-        return Conditional.single(
-            context: context,
-            conditionBuilder: (context) =>
-            state is! ShopLoadingGetFavoritesState,
-            widgetBuilder: (context) => ListView.builder(
-                itemBuilder: (context, index) => buildListProduct(
-                    ShopCubit.get(context)
-                        .favoritesModel!
-                        .data
-                        .data[index]
-                        .product,
-                    context),
-                itemCount: ShopCubit.get(context)
-                    .favoritesModel!
-                    .data
-                    .data
-                    .length),
-            fallbackBuilder: (context) =>
-                Center(child: CircularProgressIndicator()));
+        return Container(
+          child: Conditional.single(
+              context: context,
+              conditionBuilder: (context) =>
+                  state is! ShopLoadingGetFavoritesState,
+              widgetBuilder: (context) => ListView.builder(
+                  itemBuilder: (context, index) => buildListProduct(
+                      ShopCubit.get(context)
+                          .favoritesModel!
+                          .data
+                          .data[index]
+                          .product,
+                      context
+                      ),
+                  itemCount:
+                      ShopCubit.get(context).favoritesModel!.data.data.length),
+              fallbackBuilder: (context) =>
+                  Center(child: CircularProgressIndicator())),
+        );
+
       },
     );
   }
 }
+
+

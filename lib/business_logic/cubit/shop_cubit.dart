@@ -136,4 +136,36 @@ class ShopCubit extends Cubit<ShopState> {
       emit(ShopErrorUserDataState());
     });
   }
+
+  void updateUserData({
+    required String name,
+    required String email,
+    required String phone,
+  }) {
+    emit(ShopLoadingUpdateUserState());
+    ShopApi.putData(
+      url: UpdateProfile,
+      token: token,
+      data: {
+        'name': name,
+        'email': email,
+        'phone': phone,
+      },
+    ).then((value) {
+      userModel = ShopLoginModel.fromJson(value.data);
+     // printFullText(userModel.data.name);
+
+      print(value.data.toString());
+
+      emit(ShopSuccessUpdateUserState(userModel!));
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopErrorUpdateUserState());
+    });
+
+
+
+
+
+  }
 }

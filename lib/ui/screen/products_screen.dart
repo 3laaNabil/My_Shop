@@ -9,7 +9,6 @@ import 'package:shop_app/business_logic/cubit/shop_cubit.dart';
 import 'package:shop_app/data/models/categories_model.dart';
 import 'package:shop_app/data/models/home_model.dart';
 import 'package:shop_app/ui/styles/colors.dart';
-import 'package:shop_app/ui/widgets/build_list_product.dart';
 
 class ProductsScreen extends StatelessWidget {
   @override
@@ -75,6 +74,7 @@ class ProductsScreen extends StatelessWidget {
                 Container(
                   height: 100,
                   child: ListView.separated(
+
                     separatorBuilder: (context, index) => SizedBox(
                       width: 20 ,
                     ) ,
@@ -87,6 +87,10 @@ class ProductsScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   height: 20.0,
+                ),
+                Container(width: double.infinity,height: 0.5,color: defaultColor,),
+                SizedBox(
+                  height: 5.0,
                 ),
                 Text(
                   'New Products',

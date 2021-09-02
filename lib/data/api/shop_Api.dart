@@ -46,4 +46,22 @@ class ShopApi {
       queryParameters: query,
     );
   }
+
+  static Future<Response> putData({
+    required String url,
+    Map<String, dynamic>? query,
+    required Map<String, dynamic>? data,
+    String? token,
+  }) async {
+    dio!.options.headers = {
+      'lang': 'en',
+      'Authorization': '$token',
+      'Content-Type': 'application/json',
+    };
+    return await dio!.put(
+      url,
+      data: data,
+      queryParameters: query,
+    );
+  }
 }

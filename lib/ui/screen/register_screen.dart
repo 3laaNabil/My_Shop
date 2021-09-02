@@ -30,14 +30,9 @@ class RegisterScreen extends StatelessWidget {
     if (state is ShopRegisterSuccessState) {
       if (state.registerModel.status!) {
         print(state.registerModel.message);
-        // Fluttertoast.showToast(
-        //     msg: state.loginModel.message.toString(),
-        //     toastLength: Toast.LENGTH_SHORT,
-        //     gravity: ToastGravity.CENTER,
-        //     timeInSecForIosWeb: 5,
-        //     backgroundColor: Colors.green,
-        //     textColor: Colors.white,
-        //     fontSize: 16.0);
+
+
+
         CacheHelper.saveData(
           key: 'token',
           value: state.registerModel.data!.token,
@@ -45,11 +40,22 @@ class RegisterScreen extends StatelessWidget {
 
 
         {
+
+          Fluttertoast.showToast(
+              msg: state.registerModel.message.toString(),
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER,
+              timeInSecForIosWeb: 5,
+              backgroundColor: Colors.green,
+              textColor: Colors.white,
+              fontSize: 16.0);
           token = state.registerModel.data!.token;
+
           navigatToFinish(context, HomeScreen());
+
         });
 
-        navigatToFinish(context, HomeScreen());
+
       } else {
         print(state.registerModel.message);
 
@@ -195,7 +201,7 @@ class RegisterScreen extends StatelessWidget {
                                token = CacheHelper.getData(key: 'token');
                               }
                             },
-                            child: Text('LOGIN'),
+                            child: Text('REGISTER'),
                           ),
                         ),
                         fallback: (context) =>
