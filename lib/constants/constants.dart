@@ -12,23 +12,26 @@ navigatTo(context, widget) {
   );
 }
 
-
 navigatToFinish(context, widget) {
-  return  Navigator.pushAndRemoveUntil(
+  return Navigator.pushAndRemoveUntil(
     context,
     MaterialPageRoute(
       builder: (context) => widget,
     ),
-        (route) {
+    (route) {
       return false;
     },
   );
 }
 
- String ?token  ;
+String? token;
+
 void signOut (context) {
-  CacheHelper.removeData('token').then((value){
+  CacheHelper.removeData(key: 'token').then((value)  {
     navigatToFinish(context, LoginScreen());
     ShopCubit.get(context).currentIndex = 0;
+
   });
+
+
 }

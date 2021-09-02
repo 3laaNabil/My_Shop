@@ -53,6 +53,7 @@ flutter:
      - assets/images/onbording.jpg
      - assets/images/boarding2.jpg
      - assets/images/logo.png
+     - assets/images/profile.png
      - pubspec.yaml
 
 

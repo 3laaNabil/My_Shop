@@ -18,84 +18,112 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var model = ShopCubit.get(context).userModel;
+    nameController.text = model!.data!.name!;
+    emailController.text = model.data!.email!;
+    phoneController.text = model.data!.phone!;
     return BlocConsumer<ShopCubit, ShopState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var model = ShopCubit.get(context).userModel;
+        return SingleChildScrollView(
+          child: Conditional.single(
+              context: context,
+              conditionBuilder: (context) =>
+                  ShopCubit.get(context).userModel != null,
+              widgetBuilder: (context) => Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        Image.asset(
+                         'assets/images/profile.png'
+                          ,
+                          height: 170,
+                          width: 200,
 
-        nameController.text = model!.data!.name!;
-        emailController.text = model.data!.email!;
-        phoneController.text = model.data!.phone!;
-        return Conditional.single(
-            context: context,
-            conditionBuilder: (context) =>
-                ShopCubit.get(context).userModel != null,
-            widgetBuilder: (context) => Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    children: [
-                      defaultFormField(
-                          controller: nameController,
-                          type: TextInputType.name,
-                          validate: (value) {
-                            if (value.isEmpty) {
-                              return 'name must not be empty';
-                            }
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        defaultFormField(
+                            controller: nameController,
+                            type: TextInputType.name,
+                            validate: (value) {
+                              if (value.isEmpty) {
+                                return 'name must not be empty';
+                              }
 
-                            return null;
-                          },
-                          label: 'Name',
-                          prefix: Icons.person),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      defaultFormField(
-                          controller: emailController,
-                          type: TextInputType.emailAddress,
-                          validate: (value) {
-                            if (value.isEmpty) {
-                              return 'Email must not be empty';
-                            }
+                              return null;
+                            },
+                            label: 'Name',
+                            prefix: Icons.person),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        defaultFormField(
+                            controller: emailController,
+                            type: TextInputType.emailAddress,
+                            validate: (value) {
+                              if (value.isEmpty) {
+                                return 'Email must not be empty';
+                              }
 
-                            return null;
-                          },
-                          label: 'Email',
-                          prefix: Icons.mail),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      defaultFormField(
-                          controller: phoneController,
-                          type: TextInputType.phone,
-                          validate: (value) {
-                            if (value.isEmpty) {
-                              return 'phone number must not be empty';
-                            }
+                              return null;
+                            },
+                            label: 'Email',
+                            prefix: Icons.mail),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        defaultFormField(
+                            controller: phoneController,
+                            type: TextInputType.phone,
+                            validate: (value) {
+                              if (value.isEmpty) {
+                                return 'phone number must not be empty';
+                              }
 
-                            return null;
-                          },
-                          label: 'Phone Number',
-                          prefix: Icons.phone),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          onPressed: () => signOut(context),
-                          child: const Text(
-                            'LOG OUT',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 18.0),
+                              return null;
+                            },
+                            label: 'Phone Number',
+                            prefix: Icons.phone),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: const Text(
+                              'UPDATE',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18.0),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              signOut(context);
+                            },
+                            child: const Text(
+                              'LOG OUT',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18.0),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-            fallbackBuilder: (context) =>
-                Center(child: CircularProgressIndicator()));
+              fallbackBuilder: (context) =>
+                  Center(child: CircularProgressIndicator())),
+        );
       },
     );
   }

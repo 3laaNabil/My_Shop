@@ -3,11 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:shop_app/constants/constants.dart';
 import 'package:shop_app/data/api/end_points.dart';
 import 'package:shop_app/data/api/shop_Api.dart';
 import 'package:shop_app/data/models/shopLoginModel.dart';
-import 'package:shop_app/data/models/shop_register_model.dart';
+
 
 part 'register_state.dart';
 

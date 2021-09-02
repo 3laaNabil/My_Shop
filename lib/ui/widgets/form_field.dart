@@ -22,7 +22,7 @@ Widget defaultFormField({
     obscureText: isPassword,
     onTap: () => onTap??(){},
     onChanged: (value) => onChange??(value),
-    onFieldSubmitted: (value) => onSubmit!(value),
+    //onFieldSubmitted: (value) => onSubmit(value),
     validator: (value) {
       return validate!(value);
     },

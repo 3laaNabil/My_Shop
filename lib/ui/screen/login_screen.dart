@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/business_logic/conditional_builder.dart';
 import 'package:shop_app/business_logic/cubit/login_cubit.dart';
+import 'package:shop_app/business_logic/cubit/shop_cubit.dart';
 import 'package:shop_app/constants/constants.dart';
 import 'package:shop_app/data/local/cache_helper.dart';
 import 'package:shop_app/ui/screen/home_screen.dart';
@@ -35,15 +36,19 @@ class LoginScreen extends StatelessWidget {
               CacheHelper.saveData(
                 key: 'token',
                 value: state.loginModel.data!.token,
-              ).then((value)
-
-
-              {
+              ).then((value) {
                 token = state.loginModel.data!.token;
                 navigatToFinish(context, HomeScreen());
+                mailController.clear();
+                passController.clear();
+                ShopCubit.get(context).getHomeData();
+                ShopCubit.get(context).getCategoriesData();
+                ShopCubit.get(context).getFavorites();
+                ShopCubit.get(context).getUserData();
+
               });
 
-              navigatToFinish(context, HomeScreen());
+             // navigatToFinish(context, HomeScreen());
             } else {
               print(state.loginModel.message);
 
@@ -71,16 +76,16 @@ class LoginScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              alignment:Alignment.topCenter,
+                                alignment: Alignment.topCenter,
                                 child: Image.asset(
-                              'assets/images/logo.png',
-                              width: 100,
-                              height: 100,
-                              scale: 1.0,
-                              alignment: Alignment.topCenter,
-                            )),
+                                  'assets/images/logo.png',
+                                  width: 100,
+                                  height: 100,
+                                  scale: 1.0,
+                                  alignment: Alignment.topCenter,
+                                )),
                             Container(
-                              alignment:Alignment.topCenter,
+                              alignment: Alignment.topCenter,
                               child: Text(
                                 "LOGIN",
                                 style: Theme.of(context)
@@ -156,10 +161,8 @@ class LoginScreen extends StatelessWidget {
                                         password: passController.text,
                                       );
 
-                                      token = CacheHelper.getData( key: 'token');
-
+                                      token = CacheHelper.getData(key: 'token');
                                     }
-
                                   },
                                   child: Text('LOGIN'),
                                 ),

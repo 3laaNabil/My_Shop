@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shop_app/business_logic/conditional_builder.dart';
-import 'package:shop_app/business_logic/cubit/login_cubit.dart';
 import 'package:shop_app/business_logic/cubit/register_cubit.dart';
 import 'package:shop_app/constants/constants.dart';
 import 'package:shop_app/data/local/cache_helper.dart';
 import 'package:shop_app/ui/widgets/form_field.dart';
 
+import 'home_screen.dart';
+
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +27,42 @@ class RegisterScreen extends StatelessWidget {
   create: (context) => RegisterCubit(),
   child: BlocConsumer<RegisterCubit, ShopRegisterStates>(
   listener: (context, state) {
-    // TODO: implement listener
+    if (state is ShopRegisterSuccessState) {
+      if (state.registerModel.status!) {
+        print(state.registerModel.message);
+        // Fluttertoast.showToast(
+        //     msg: state.loginModel.message.toString(),
+        //     toastLength: Toast.LENGTH_SHORT,
+        //     gravity: ToastGravity.CENTER,
+        //     timeInSecForIosWeb: 5,
+        //     backgroundColor: Colors.green,
+        //     textColor: Colors.white,
+        //     fontSize: 16.0);
+        CacheHelper.saveData(
+          key: 'token',
+          value: state.registerModel.data!.token,
+        ).then((value)
+
+
+        {
+          token = state.registerModel.data!.token;
+          navigatToFinish(context, HomeScreen());
+        });
+
+        navigatToFinish(context, HomeScreen());
+      } else {
+        print(state.registerModel.message);
+
+        Fluttertoast.showToast(
+            msg: state.registerModel.message.toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 5,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      }
+    }
   },
   builder: (context, state) {
     return Scaffold(
