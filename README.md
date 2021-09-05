@@ -1,7 +1,6 @@
 # shop_app
 
 A new Flutter project.
-![Screenshot_1630122489](https://user-images.githubusercontent.com/78323291/131205300-82c33818-31f7-4811-aea9-54320740e450.png)
 ## Getting Started
 
 
