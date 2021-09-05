@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 Widget defaultFormField({
   required TextEditingController controller,
   required TextInputType type,
-  Function(dynamic? val)? onSubmit,
+  Function(dynamic val)? onSubmit,
   Function? onChange,
   Function? onTap,
   bool isPassword = false,
@@ -22,7 +22,7 @@ Widget defaultFormField({
     obscureText: isPassword,
     onTap: () => onTap??(){},
     onChanged: (value) => onChange??(value),
-    //onFieldSubmitted: (value) => onSubmit(value),
+    onFieldSubmitted: (value) => onSubmit!(value),
     validator: (value) {
       return validate!(value);
     },

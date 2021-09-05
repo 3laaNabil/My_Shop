@@ -7,3 +7,4 @@ const FAVORITES = 'favorites';
 const PROFILE = 'profile';
 const REGISTER = 'register';
 const UpdateProfile = 'update-profile';
+const SEARCH = 'products/search';
