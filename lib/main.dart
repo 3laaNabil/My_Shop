@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/business_logic/cubit/app_cubit.dart';
 import 'package:shop_app/business_logic/cubit/shop_cubit.dart';
 import 'package:shop_app/data/api/shop_Api.dart';
 import 'package:shop_app/ui/screen/home_screen.dart';
@@ -16,6 +17,7 @@ Future<void> main() async {
   ShopApi.init();
   await CacheHelper.init();
   Widget widget;
+  bool ?isDark = CacheHelper.getData(key: 'isDark');
   bool? showOnBoard = CacheHelper.getData(
     key: 'onBoarding',
   );
@@ -47,21 +49,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ShopCubit()
-        ..getHomeData()
-        ..getCategoriesData()
-        ..getFavorites()
-        ..getUserData()
-      ,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        themeMode: ThemeMode.light,
-        //   AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-        home: startWidget,
-      ),
+    return MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => AppCubit()),
+          BlocProvider(
+            create: (context) =>
+            ShopCubit()
+              ..getHomeData()
+              ..getCategoriesData()
+              ..getFavorites()
+              ..getUserData()) ]
+            ,
+            child: BlocConsumer<AppCubit, AppState>(
+              listener: (context, state) {
+                // TODO: implement listener
+              },
+              builder: (context, state) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  theme: lightTheme,
+                  darkTheme: darkTheme,
+                  //themeMode: ThemeMode.light,
+                    themeMode: AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
+                  home: startWidget,
+                );
+              },
+            ),
+
+
     );
   }
 }

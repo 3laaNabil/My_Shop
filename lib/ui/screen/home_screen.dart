@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shop_app/business_logic/cubit/app_cubit.dart';
 import 'package:shop_app/business_logic/cubit/shop_cubit.dart';
 import 'package:shop_app/constants/constants.dart';
 import 'package:shop_app/ui/screen/search_screen.dart';
@@ -21,7 +22,16 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     navigatTo(context, SearchScreen());
                   },
-                  icon: Icon(Icons.search))
+                  icon: Icon(Icons.search)) ,
+              IconButton(
+                icon: Icon(
+                  Icons.brightness_4_outlined,
+                ),
+                onPressed: ()
+                {
+                  AppCubit.get(context).changeMode();
+                },
+              ),
             ],
           ),
           body: cubit.bottomScreens[cubit.currentIndex],
