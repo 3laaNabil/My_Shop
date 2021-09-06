@@ -19,23 +19,24 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   List<BoardingModel> boarding = [
     BoardingModel(
       image: 'assets/images/onbording.jpg',
-      title: 'On Board 1 Title',
-      body: 'On Board 1 Body',
+      title: 'Online Shopping 1',
+      body:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galle",
     ),
     BoardingModel(
       image: 'assets/images/boarding2.jpg',
-      title: 'On Board 2 Title',
-      body: 'On Board 2 Body',
+      title: 'Online Shopping in Egypt 2',
+      body:
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galle",
     ),
     BoardingModel(
       image: 'assets/images/onbording.jpg',
-      title: 'On Board 3 Title',
-      body: 'On Board 3 Body',
+      title: 'Online Shopping in Egypt 3',
+      body: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galle",
     ),
   ];
 
   bool isLast = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +45,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           actions: [
             TextButton(
               onPressed: () {
-
                 CacheHelper.saveData(
                   key: 'onBoarding',
                   value: true,
