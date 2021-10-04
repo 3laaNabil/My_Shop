@@ -3,7 +3,8 @@
 A new Flutter project.
 ## Getting Started
 
-![Image of Yaktocat](https://drive.google.com/file/d/1nHr7Qa3vJEsa1lNNWT2hYIj3XYP1MJfe/view?usp=sharing)
+[![asciicast](https://github.com/3laaNabil/My_Shop/blob/main/assets/images/ezgif.com-gif-maker.gif)](https://github.com/3laaNabil/My_Shop/blob/main/assets/ezgif.com-gif-maker.mp4)
+
 This project is a starting point for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
